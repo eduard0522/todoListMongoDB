@@ -1,7 +1,11 @@
+import FormRegister from "../components/Forms/FormRegister.jsx"
 
 const Home = () => {
   return (
-    <h1 className=" text-4xl  font-bold"> Home page </h1>
+    <div className=" w-full flex justify-center items-center">
+        <FormRegister />
+    </div>
+    
   )
 }
 
