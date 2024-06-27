@@ -22,6 +22,7 @@ export const resgisterSchema = z.object({
 export const loginSchema = z.object({
   email: z.string({
     required_error: "Email is required",
+    message :" Invalid email "
   }).email({
     required_error: "Invalid email address",
    }),

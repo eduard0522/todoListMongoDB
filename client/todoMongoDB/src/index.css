@@ -5,4 +5,7 @@
 body{
   background-color: #202020;
   color:  #F5F5F5;
+  max-width: 1600px;
+  padding: 1rem 4rem;
+  margin: auto;
 }

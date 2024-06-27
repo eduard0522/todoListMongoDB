@@ -1,17 +1,17 @@
 import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs';
 import { createAccessToken } from '../libs/jwt.js';
-
+import jwt from 'jsonwebtoken';
+import { SECRET_PASS } from '../config.js';
 
 
 
 export const register =  async (req,res) => {
   const {username , email , password } = req.body;
   try {
+      const userFound = await User.findOne({email});
 
-      const userFound = User.findOne({email});
-
-      if(userFound ) return res.status(404).json({ message:["User already exists."]})
+      if( userFound ) return res.status(404).json({ message:["User already exists."]})
 
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser =  new User({
@@ -21,6 +21,7 @@ export const register =  async (req,res) => {
       });
 
       const userSaved = await newUser.save();
+
       const token = await createAccessToken({id : userSaved._id });     
         
       res.cookie("token" , token)
@@ -33,7 +34,7 @@ export const register =  async (req,res) => {
       });
 
   } catch (error) {
-    res.status(500).json({message : "error al crear este usuario"})
+    res.status(500).json({message : " "})
     console.log(error)
   }
 }
@@ -42,15 +43,15 @@ export const register =  async (req,res) => {
 export const login =  async (req,res) => {
    
   const{email ,password } = req.body;
-
+  console.log( email , password)
   try {
 
     const userFound = await User.findOne({ email });
 
-    if(!userFound) return res.status(400).json({message : "Creadenciales invalidos."});
+    if(!userFound) return res.status(400).json({message :[ "Creadenciales invalidos."]});
 
     const isMatch = await bcrypt.compare(password , userFound.password);
-    if(!isMatch) return res.status(400).json({message : "Creadenciales invalidos."});
+    if(!isMatch) return res.status(400).json({message : ["Creadenciales invalidos."]});
 
     const token = await createAccessToken({id : userFound._id }); 
 
@@ -65,7 +66,7 @@ export const login =  async (req,res) => {
 
   } catch (error) {
     console.log(error)
-    return res.status(500).json({ message:  "Ocurrio un error inesperado, intente de nuevo mas tarde."})
+    return res.status(500).json({ message:[" An unexpected error ocurred, please try again later. " ]})
   }
 }
 
@@ -83,7 +84,7 @@ export const profile = async (req,res) => {
     
   try {
     const userFound = await User.findById(req.user.id)
-    if(!userFound) return res.status(404).json({message : " user not found " });
+    if(!userFound) return res.status(404).json({message :[ " user not found "] });
 
     return res.json({
       id: userFound._id,
@@ -93,6 +94,30 @@ export const profile = async (req,res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message:  " An unexpected error ocurred, please try again later.  " });
+    return res.status(500).json({ message: [" An unexpected error ocurred, please try again later.  "] });
   }
+}
+
+
+export const verifyToken = async (req,res) => {
+
+  const { token } = req.cookies;
+  
+  if(!token) return res.status(401).json({message : [" Unauthorized "]})
+
+  jwt.verify(token , SECRET_PASS , async  (err, user) => {
+
+      if(err) return res.status(401).json({message : [" Unauthorized "]});
+
+      const userFound = await User.findById(user.id)
+
+      if(!userFound) return res.status(404).json({message :[ " user not found" ]});
+
+
+      return res.json({
+        id: userFound._id,
+        username: userFound.username,
+        email : userFound.email,
+      })
+  } )
 }

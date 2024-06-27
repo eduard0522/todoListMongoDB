@@ -1,8 +1,12 @@
+
 import { Router } from "./router.jsx"
 
 function App() {
   return (
-   <Router />
+    <>
+      <Router />
+    </>
+ 
   )
 }
 export default App
