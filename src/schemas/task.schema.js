@@ -9,8 +9,9 @@ export const createTaskSchema =  z.object({
   description: z.string({ 
     required_error : "Description is required. " ,
   }),
+  stateTask: z.string({
+    message : " State must be a string. "
+  }).optional(),
   dateMax : z.string().datetime().optional(),
 });
-
-
 

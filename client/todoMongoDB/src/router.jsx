@@ -7,7 +7,7 @@ import { DragAndDrop } from "./components/DragAndDrop.jsx";
 import Home from "./pages/Home.jsx";
 import LoginPage from "./pages/Login.jsx";
 import TasksPage from "./pages/Tasks.jsx";
-import TaskList from "./pages/TaskList.jsx";
+import TaskDrag from "./pages/TasksDrag.jsx";
 
 export function  Router() {
   
@@ -18,9 +18,10 @@ export function  Router() {
             <Route path="/register" element={ < Home /> } />
             <Route path="/login" element={ <LoginPage />  } />
                 <Route element={ <ProtectedRoutes/>} > 
-                    <Route path="/tasks" element={  <TasksPage /> } />
+                    <Route path="/tasks" element={  <TaskDrag /> } />
                     <Route path="/task/:id" element={  <TasksPage /> } />
                     <Route path="/profile" element={ <DragAndDrop /> } />
+                    <Route path="/task-drag" element={ <TaskDrag /> } />
                 </Route>
         </Routes>
      </TaskContextProvider>

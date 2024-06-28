@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const TasksPage = () => {
 
-  const { tasks, getTasks, loading, openFormTask ,changeOpenForm } = useTask();
+  const { tasks, getTasks, loading, openFormTask  } = useTask();
 
   useEffect(() => {
     getTasks();

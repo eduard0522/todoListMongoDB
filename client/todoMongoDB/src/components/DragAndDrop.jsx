@@ -9,12 +9,12 @@ export const DragAndDrop = () => {
     { id: 4, name: "Task 4"  , description : "jkd djwj lai ed ye a laojf lor eja sjudefefkk",  stateTask : "to-do"},
 ]);
 
-  
   const getData = (list) => {
     return tasks.filter( item => {
       return item.stateTask == list
     })
   }
+
 
   const startDrag = (evt , item) => {
      evt.dataTransfer.setData("itemID", item.id);
@@ -25,6 +25,7 @@ export const DragAndDrop = () => {
   }
 
   const onDropEvt = (evt, list) => { 
+    
      evt.preventDefault();
       const itemID = evt.dataTransfer.getData("itemID");
 
@@ -50,7 +51,6 @@ export const DragAndDrop = () => {
           <h3 className="text-2xl font-bold my-2"> Tareas por hacer </h3>
 
           <div  className="min-h-[100vh]"
-            droppable="true"
             onDragOver={ (evt) => dragInOver(evt) }
             onDrop={(evt) => onDropEvt(evt,"to-do")}
             >
@@ -65,14 +65,13 @@ export const DragAndDrop = () => {
                   ))
                  }
 
-
           </div>
         </div>
 
 
         <div className=" mt-10 w-1/3  p-2 border-t-8 rounded-md border-sky-400"> 
           <h3 className="text-2xl font-bold my-2"> en proceso</h3>
-          <div className="min-h-[100vh]" droppable="true"
+          <div className="min-h-[100vh]"
             onDragOver={ (evt) => dragInOver(evt) } 
             onDrop={(evt) => onDropEvt(evt,"process")}
             >
@@ -92,7 +91,7 @@ export const DragAndDrop = () => {
 
         <div className=" mt-10 w-1/3  p-2 border-t-8 rounded-md border-green-500"> 
           <h3 className="text-2xl font-bold my-2"> Terminada </h3>
-          <div className="min-h-[100vh]" droppable="true"
+          <div className="min-h-[100vh]" 
             onDragOver={ (evt) => dragInOver(evt) } 
             onDrop={(evt) => onDropEvt(evt,"finaliced")}
             >

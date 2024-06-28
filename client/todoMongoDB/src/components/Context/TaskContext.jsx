@@ -1,5 +1,6 @@
 import { createContext , useContext, useState } from "react";
 import { getTaskRequest,getTasksRequest, createTaskRequest ,deleteTaskRequest ,updateTaskRequest } from "../../api/tasks";
+import errorMap from "zod/locales/en.js";
 
 export const TaskContext = createContext()
 
@@ -59,12 +60,15 @@ export const TaskContextProvider = ({ children }) => {
 
       const updateTask = async (id,task) => {
         try {
+          console.log(task)
           const res = await updateTaskRequest(id,task);
           if(res.data){
             const newTasks = tasks.map((task) => task._id === id ? task = res.data :  task)
+            console.log(res)
             setTasks(newTasks)
           }
         } catch (error) {
+          console.log(error)
           setTasks(tasks)
         }
       }
@@ -86,7 +90,7 @@ export const TaskContextProvider = ({ children }) => {
 
       return(
         <TaskContext.Provider 
-            value={{ tasks, createTask, getTasks, loading , changeOpenForm , openFormTask, updateTask, deleteTask }}
+            value={{ tasks, createTask, getTasks, loading , setTasks, changeOpenForm , openFormTask, updateTask, deleteTask }}
         >
             {children}
 
