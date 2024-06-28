@@ -20,7 +20,7 @@ const TasksPage = () => {
   return (
     <main className=" mt-4" >
 
-        <section className="grid grid-cols-3 gap-4 w-full">
+        <section className="grid  md:grid-cols-3 gap-4 w-full">
             { tasks.map(task => <TaskCard  key={task._id} task ={task}/>)}
         </section>
 

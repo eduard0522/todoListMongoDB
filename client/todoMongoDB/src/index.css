@@ -6,6 +6,13 @@ body{
   background-color: #202020;
   color:  #F5F5F5;
   max-width: 1600px;
-  padding: 1rem 4rem;
+  padding: 1rem;
   margin: auto;
+}
+
+@media (min-width = 720px ){
+  body{
+    padding: 1rem 4rem;
+  }
+   
 }

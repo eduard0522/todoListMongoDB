@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
 import { useTask } from "./Context/TaskContext"
 
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin2Fill } from "react-icons/ri";
+
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 dayjs.extend(utc);
@@ -8,6 +11,7 @@ dayjs.extend(utc);
 
 const TaskCard = ({task}) => {
 
+  console.log(task)
 
   const {deleteTask , changeOpenForm} = useTask()
 
@@ -18,11 +22,11 @@ const TaskCard = ({task}) => {
             <h2 className="text-2xl font-bold ">{task.title}</h2>
             <div className="flex gap-2">
                <Link to={`/task/${task._id}`  } onClick={ changeOpenForm} >
-                    <button type="button" className=" py-2 px-4 rounded-md bg-sky-400"> Edit</button> 
+                    <button type="button" className=" rounded-md text-4xl text-indigo-300"> <FaEdit />  </button> 
                 </Link>
-              <button type="button" className=" py-2 px-4 rounded-md bg-red-400"
+              <button type="button" className=" rounded-md text-4xl text-red-400"
                 onClick={() => deleteTask(task._id)}
-              >Delete</button>
+              >  <RiDeleteBin2Fill /> </button>
             </div>
         </header>
         <p>
